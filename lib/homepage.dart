@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'travelpage.dart';
 import 'mappage.dart';
+import 'userpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TravelPage()),
+                  MaterialPageRoute(builder: (context) => UserPage()),
                 );
               },
             ),

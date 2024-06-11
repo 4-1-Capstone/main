@@ -33,14 +33,10 @@ class _TravelPageState extends State<TravelPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('애니메이션 리스트'),
-        backgroundColor: Colors.blueGrey,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => MyHomePage(title: '메인 페이지')),
-            );
+            Navigator.popUntil(context, (route) => route.isFirst);
           },
         ),
       ),
