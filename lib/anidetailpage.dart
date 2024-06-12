@@ -19,23 +19,18 @@ class AnimationDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              image,
-              width: double.infinity,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(height: 16),
+            Image.asset(image, height: 200),
+            SizedBox(height: 20),
             Text(
               title,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 10),
             Text(
               subtitle,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 20),
             Text(
               description,
               style: TextStyle(fontSize: 16),

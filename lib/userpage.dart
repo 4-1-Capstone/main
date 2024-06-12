@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'favorite_deleted_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'loginpage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,11 +43,13 @@ class _UserPageState extends State<UserPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () {
-              // 로그아웃 처리 코드
-              // 예를 들어, 로그인 페이지로 돌아가기
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              // 여기에서 로그인 페이지로 이동하는 추가 코드를 작성할 수 있습니다.
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool('isLoggedIn', false);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
             },
           ),
         ],

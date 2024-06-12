@@ -112,7 +112,70 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
+  @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  final TextEditingController _searchController = TextEditingController();
+  List<Map<String, String>> _locations = [
+    {
+      'title': '너의 이름은',
+      'subtitle': '신카이 마코토',
+      'image': 'assets/your_name.jpg',
+      'description': '이건 너의 이름은에 대한 설명이다. 신카이 마코토 감독의 애니메이션 영화입니다.'
+    },
+    {
+      'title': '토토로',
+      'subtitle': '지브리, 미야자키 하야오',
+      'image': 'assets/totoro.png',
+      'description': '이건 토토로에 대한 설명이다. 토토로는 미야자키 하야오 감독의 애니메이션 영화입니다.'
+    },
+    {
+      'title': '슬램덩크',
+      'subtitle': '농구',
+      'image': 'assets/slamdunk.jpg',
+      'description': '이건 슬램덩크에 대한 설명이다. 슬램덩크는 농구를 주제로 한 애니메이션입니다.'
+    },
+    {
+      'title': '센과 치히로',
+      'subtitle': '지브리, 미야자키 하야오',
+      'image': 'assets/spirited_away.png',
+      'description': '이건 센과 치히로의 행방불명에 대한 설명이다. 미야자키 하야오 감독의 애니메이션 영화입니다.'
+    },
+  ];
+
+  void _searchAnimation() {
+    String searchQuery = _searchController.text.toLowerCase().trim();
+    bool found = false;
+
+    for (var location in _locations) {
+      if (location['title']!.toLowerCase().contains(searchQuery)) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AnimationDetailPage(
+              title: location['title']!,
+              subtitle: location['subtitle']!,
+              image: location['image']!,
+              description: location['description']!,
+            ),
+          ),
+        );
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('정보가 없습니다'),
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -125,10 +188,15 @@ class HomeTab extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: '어떤 애니메이션을 찾으시나요?',
                 prefixIcon: Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.arrow_circle_right),
+                  onPressed: _searchAnimation,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
               ),
+              onSubmitted: (value) => _searchAnimation(),
             ),
           ),
           Padding(

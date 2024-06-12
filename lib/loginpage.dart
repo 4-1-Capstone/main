@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'homepage.dart';
 
 void main() {
@@ -56,12 +57,15 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
+                        onPressed: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setBool('isLoggedIn', true);
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => MyHomePage(title: 'Ani_gation')),
                           );
                         },
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueGrey[800],
                           foregroundColor: Colors.white,
@@ -75,8 +79,14 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text('게스트로 시작'),
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // 로그인 버튼 클릭 시 동작
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setBool('isLoggedIn', true);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage(title: 'Ani_gation')),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueGrey[800],
