@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'travelpage.dart';
 import 'mappage.dart';
 import 'userpage.dart';
+import 'anidetailpage.dart';
+import 'favorite_deleted_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => FavoriteAndDeletedProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: '메인 페이지'),
+      home: MyHomePage(title: 'Ani_gation'),
     );
   }
 }
@@ -130,10 +138,10 @@ class HomeTab extends StatelessWidget {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                _buildCategoryItem(Icons.animation, '너의 이름은'),
-                _buildCategoryItem(Icons.animation, '토토로'),
-                _buildCategoryItem(Icons.animation, '슬램덩크'),
-                _buildCategoryItem(Icons.animation, '센과 치히로'),
+                _buildCategoryItem(context, Icons.animation, '너의 이름은', '신카이 마코토', 'assets/your_name.jpg', '이건 너의 이름은에 대한 설명이다. 신카이 마코토 감독의 애니메이션 영화입니다.'),
+                _buildCategoryItem(context, Icons.animation, '토토로', '지브리, 미야자키 하야오', 'assets/totoro.png', '이건 토토로에 대한 설명이다. 토토로는 미야자키 하야오 감독의 애니메이션 영화입니다.'),
+                _buildCategoryItem(context, Icons.animation, '슬램덩크', '농구', 'assets/slamdunk.jpg', '이건 슬램덩크에 대한 설명이다. 슬램덩크는 농구를 주제로 한 애니메이션입니다.'),
+                _buildCategoryItem(context, Icons.animation, '센과 치히로', '지브리, 미야자키 하야오', 'assets/spirited_away.png', '이건 센과 치히로의 행방불명에 대한 설명이다. 미야자키 하야오 감독의 애니메이션 영화입니다.'),
               ],
             ),
           ),
@@ -171,14 +179,29 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryItem(IconData icon, String label) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, size: 40),
-        SizedBox(height: 5),
-        Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
-      ],
+  Widget _buildCategoryItem(BuildContext context, IconData icon, String label, String subtitle, String image, String description) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AnimationDetailPage(
+              title: label,
+              subtitle: subtitle,
+              image: image,
+              description: description,
+            ),
+          ),
+        );
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 40),
+          SizedBox(height: 5),
+          Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
+        ],
+      ),
     );
   }
 
@@ -228,13 +251,20 @@ class _RecommendTabState extends State<RecommendTab> {
           return Dismissible(
             key: Key(destination['name']!),
             onDismissed: (direction) {
+              String action;
+              if (direction == DismissDirection.endToStart) {
+                Provider.of<FavoriteAndDeletedProvider>(context, listen: false)
+                    .addDeletedItem(destination['name']!);
+                action = '삭제됨';
+              } else {
+                Provider.of<FavoriteAndDeletedProvider>(context, listen: false)
+                    .addFavoriteItem(destination['name']!);
+                action = '찜됨';
+              }
+
               setState(() {
                 destinations.remove(destination);
               });
-
-              String action = direction == DismissDirection.endToStart
-                  ? '삭제됨'
-                  : '찜됨';
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

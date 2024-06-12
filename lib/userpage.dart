@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'favorite_deleted_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -122,14 +124,14 @@ class _UserPageState extends State<UserPage> {
                 title: Text('찜'),
                 leading: Icon(Icons.favorite),
                 onTap: () {
-                  // 찜으로 이동하는 코드
+                  _showFavoriteItems(context);
                 },
               ),
               ListTile(
                 title: Text('삭제'),
                 leading: Icon(Icons.delete),
                 onTap: () {
-                  // 삭제으로 이동하는 코드
+                  _showDeletedItems(context);
                 },
               ),
               ListTile(
@@ -186,6 +188,47 @@ class _UserPageState extends State<UserPage> {
                 Navigator.of(context).pop();
               },
               child: Text('저장'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showFavoriteItems(BuildContext context) {
+    final favoriteItems = Provider.of<FavoriteAndDeletedProvider>(context, listen: false).favoriteItems;
+    _showItems(context, '찜 목록', favoriteItems);
+  }
+
+  void _showDeletedItems(BuildContext context) {
+    final deletedItems = Provider.of<FavoriteAndDeletedProvider>(context, listen: false).deletedItems;
+    _showItems(context, '삭제 목록', deletedItems);
+  }
+
+  void _showItems(BuildContext context, String title, List<String> items) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(items[index]),
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('닫기'),
             ),
           ],
         );
