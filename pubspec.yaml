@@ -71,6 +71,7 @@ flutter:
     - assets/spirited_away.png
     - assets/your_name.jpg
     - assets/애니메이션_장소_위치_정보.json
+    - assets/anigation.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
