@@ -19,8 +19,8 @@ class AnimationDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(image, height: 200),
-            SizedBox(height: 20),
+            Image.asset(image, fit: BoxFit.cover),
+            SizedBox(height: 20,),
             Text(
               title,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

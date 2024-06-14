@@ -226,16 +226,16 @@ class _HomeTabState extends State<HomeTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('일본 축제', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text('일본 불꽃 축제', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 SizedBox(height: 10),
                 Container(
                   height: 200,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      _buildRecommendationItem('축제1'),
-                      _buildRecommendationItem('축제2'),
-                      _buildRecommendationItem('축제3'),
+                      _buildRecommendationItem('도쿄 가츠시카 납량 불꽃놀이', 'assets/katsushika.jpg'),
+                      _buildRecommendationItem('도쿄 아다치 불꽃놀이', 'assets/adachi.jpg'),
+                      _buildRecommendationItem('오사카 비와코 불꽃축제', 'assets/biwa.jpg'),
                     ],
                   ),
                 ),
@@ -273,7 +273,7 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  Widget _buildRecommendationItem(String location) {
+  Widget _buildRecommendationItem(String name, String assetImagePath) {
     return Padding(
       padding: EdgeInsets.only(right: 10.0),
       child: Container(
@@ -287,10 +287,10 @@ class _HomeTabState extends State<HomeTab> {
               Container(
                 height: 100,
                 color: Colors.grey[400],
-                child: Center(child: Text('여행지 정보')),
+                child: Image.asset(assetImagePath, fit: BoxFit.cover),
               ),
               SizedBox(height: 5),
-              Text(location, style: TextStyle(fontSize: 14)),
+              Text(name, style: TextStyle(fontSize: 14)),
             ],
           ),
         ),

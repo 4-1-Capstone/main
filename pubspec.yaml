@@ -73,6 +73,9 @@ flutter:
     - assets/your_name.jpg
     - assets/애니메이션_장소_위치_정보.json
     - assets/anigation.png
+    - assets/adachi.jpg
+    - assets/katsushika.jpg
+    - assets/biwa.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
