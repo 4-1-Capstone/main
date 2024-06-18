@@ -262,7 +262,7 @@ class _HomeTabState extends State<HomeTab> {
             child: Container(
               color: Colors.grey[300],
               height: 150,
-              child: Center(child: Text('추천 테마')),
+              child: Center(child: Image.asset('assets/capston.jpg')),
             ),
           ),
           Padding(
