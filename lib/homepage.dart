@@ -5,6 +5,8 @@ import 'mappage.dart';
 import 'userpage.dart';
 import 'anidetailpage.dart';
 import 'favorite_deleted_provider.dart';
+import 'character_pose.dart';
+import 'photo_list.dart';
 
 void main() {
   runApp(
@@ -41,8 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
     HomeTab(),
     TravelPage(),
     MapPage(),
-    Text('Community Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('Special Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    ChallengeBoard(),
+    CharacterSelectionApp(),
+    // Text('Special Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
 
   void _onItemTapped(int index) {
@@ -56,7 +59,18 @@ class _MyHomePageState extends State<MyHomePage> {
         context,
         MaterialPageRoute(builder: (context) => MapPage()),
       );
-    } else {
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChallengeBoard())
+      );
+    } else if (index == 4) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CharacterSelectionApp()),
+      );
+    }
+    else {
       setState(() {
         _selectedIndex = index;
       });
@@ -99,8 +113,8 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
             BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: '테마여행'),
             BottomNavigationBarItem(icon: Icon(Icons.map), label: '지도'),
-            BottomNavigationBarItem(icon: Icon(Icons.list_alt_sharp), label: '후기 게시판'),
-            BottomNavigationBarItem(icon: Icon(Icons.wifi_protected_setup), label: '특수 기능'),
+            BottomNavigationBarItem(icon: Icon(Icons.list_alt_sharp), label: '챌린지'),
+            BottomNavigationBarItem(icon: Icon(Icons.wifi_protected_setup), label: '포즈 추천'),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.blue,
